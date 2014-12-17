@@ -1,0 +1,7 @@
+server {
+  root {{nginx_sites_path}}/{{ item.name }};
+  server_name {{item.name}};
+  {% if 'config' in item.keys() %}
+  {{ item.config }}
+  {% endif %}
+}

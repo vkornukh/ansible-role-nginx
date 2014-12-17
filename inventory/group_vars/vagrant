@@ -1,2 +1,16 @@
 ---
 #vim: ft=yaml:
+nginx_sites:
+  - name: "test.example.com"
+    config: |
+      listen 80;
+      index index.html index.html;
+      location / {
+        try_files $uri $uri/ /index.html;
+      }
+    files:
+      - name: index.html
+        content: |
+          <div style='text-align: center'>
+          Example Website
+          </div>

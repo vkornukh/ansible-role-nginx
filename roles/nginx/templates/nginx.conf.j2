@@ -15,11 +15,13 @@ http {
   gzip on;
   gzip_disable "msie6";
   gzip_http_version 1.1;
-  gzip_vary {{nginx_gzip_vary}};
+  {% if nginx_gzip_vary %}
+  gzip_vary on;
+  {% endif %}
   gzip_comp_level {{nginx_gzip_comp_level}};
   gzip_buffers {{ nginx_gzip_buffers}};
   gzip_types {{ nginx_gzip_types }}; 
-  gzip_proxied: {{ nginx_gzip_proxied }};
+  gzip_proxied {{ nginx_gzip_proxied }};
   {% else %}
   gzip off;
   {% endif %}

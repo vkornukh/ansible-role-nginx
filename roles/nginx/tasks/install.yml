@@ -17,3 +17,14 @@
     name: nginx
     state: present
 
+- name: Create Nginx Paths
+  action:
+    module: file
+    path: "{{item}}" 
+    owner: root
+    mode: 0755
+    state: directory
+  with_items: 
+    - nginx_site_path
+    - /etc/nginx/sites-available
+    - /etc/nginx/sites-enabled
