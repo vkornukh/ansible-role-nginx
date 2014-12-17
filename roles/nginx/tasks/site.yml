@@ -1,0 +1,13 @@
+- name: nginx site 
+  copy: 
+  args:
+    dest: /etc/nginx/sites-available/{{ item.values.name }}
+    mode: 0640 
+    owner: root
+    content: "{{ item.values.config}}"
+  with_items: nginx_sites
+- name: nginx enable site
+  file: state=symlink 
+    src=/etc/nginx/sites-available/{{ item.values.name }}
+    dest=/etc/nginx/sites-enabled/{{ item.values.name }}
+  with_items: nginx_sites

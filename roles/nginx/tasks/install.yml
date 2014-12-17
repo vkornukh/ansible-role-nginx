@@ -1,0 +1,19 @@
+---
+
+- name: Install EPEL (CentOS)
+  yum: name=epel-release state=present
+  when: ansible_pkg_mgr == 'yum'
+
+- name: Install Auxilliary Packages
+  action:
+    module: "{{ ansible_pkg_mgr }}" 
+    name: "{{item}}"
+  when: ansible_os_family in nginx_ancillary_packages.keys()
+  with_items: nginx_ancillary_packages[ansible_os_family]|default([])
+
+- name: Install Nginx
+  action:
+    module: "{{ansible_pkg_mgr}}"
+    name: nginx
+    state: present
+

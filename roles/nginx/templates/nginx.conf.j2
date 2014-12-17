@@ -1,0 +1,43 @@
+user {{ nginx_user }};
+worker_processes {{ nginx_worker_processes }};
+pid {{ nginx_pid }};
+events { 
+  worker_connections {{ nginx_worker_connections }};
+}
+http {
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+
+  access_log  {{nginx_log_dir}}/access.log {{nginx_access_log_format}};
+  error_log  {{nginx_log_dir}}/error.log;
+
+  {% if nginx_gzip %}
+  gzip on;
+  gzip_disable "msie6";
+  gzip_http_version 1.1;
+  gzip_vary {{nginx_gzip_vary}};
+  gzip_comp_level {{nginx_gzip_comp_level}};
+  gzip_buffers {{ nginx_gzip_buffers}};
+  gzip_types {{ nginx_gzip_types }}; 
+  gzip_proxied: {{ nginx_gzip_proxied }};
+  {% else %}
+  gzip off;
+  {% endif %}
+
+  {% if nginx_sendfile %}
+  sendfile on;
+  {% else %}
+  sendfile off;
+  {% endif %}
+
+  ssl_ciphers "AES256+EECDH:AES256+EDH";
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_prefer_server_ciphers on;
+  ssl_session_cache shared:SSL:10m;
+
+  keepalive_timeout {{ nginx_keepalive_timeout }};
+
+  include /etc/nginx/conf.d/*.conf;
+
+  include /etc/nginx/sites-enabled/*; 
+}

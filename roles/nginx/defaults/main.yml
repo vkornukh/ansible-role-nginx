@@ -1,0 +1,26 @@
+---
+
+# Nginx Settings
+
+nginx_worker_processes: 1
+nginx_log_dir: /var/log/nginx
+nginx_pid: /var/run/nginx.pid
+nginx_worker_connections: 1024
+nginx_gzip: true
+#nginx_gzip_types: text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript 
+nginx_gzip_types: "*"
+nginx_gzip_proxied: off
+nginx_gzip_buffers: 16 8k
+nginx_gzip_vary: on
+nginx_gzip_comp_level: 6
+nginx_sendfile: true
+nginx_keepalive_timeout: 7
+nginx_access_log_format: combined
+nginx_sites: []
+
+# Ancillary 
+
+nginx_ancillary_packages:
+  RedHat:
+    - libselinux-python
+

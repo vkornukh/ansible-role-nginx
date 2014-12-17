@@ -1,0 +1,9 @@
+- set_fact: nginx_user="nginx"
+  when: ansible_os_family == 'RedHat'
+- set_fact: nginx_user="www-data"
+  when: ansible_os_family == 'Debian'
+- name: Configure nginx.conf
+  template: 
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: restart nginx
