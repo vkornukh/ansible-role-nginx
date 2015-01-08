@@ -25,6 +25,6 @@
     mode: 0755
     state: directory
   with_items: 
-    - nginx_site_path
-    - /etc/nginx/sites-available
-    - /etc/nginx/sites-enabled
+    - "{{ nginx_sites_path }}"
+    - "{{ nginx_sites_available }}"
+    - "{{ nginx_sites_enabled }}"
