@@ -3,3 +3,4 @@ build/*
 inventory/vagrant
 inventory/groups
 .vagrant/
+.kitchen/
