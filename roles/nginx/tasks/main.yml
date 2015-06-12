@@ -1,4 +1,7 @@
 ---
 - include: install.yml
+  when: nginx_enabled == true
 - include: configure.yml
+  when: nginx_enabled == true
 - include: sites.yml
+  when: nginx_enabled == true

@@ -1,4 +1,6 @@
 ---
+# var to short circuit the entire role
+nginx_enabled: true
 
 # Nginx Settings
 
