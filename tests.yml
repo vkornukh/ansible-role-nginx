@@ -1,13 +1,23 @@
 - hosts: nginx
   tasks:
-    - command: "curl -s -H 'Host: {{item.0.name}}' 'http://127.0.0.1/{{item.1.name}}'"
+    - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/up'"
       register: curlresponse
-      with_subelements: 
-        - nginx_sites
-        - files
-      changed_when: false
-    - debug: var=item.stdout
-      with_items: curlresponse.results
-    - fail: Failed to pull expected example website content
-      when: "item.stdout != '<div style=\\'text-align: center\\'>\nExample Website\n</div>'"
-      with_items: curlresponse.results
+    - assert: 
+        that:
+          - curlresponse.rc == 0
+          - '"200" in curlresponse.stderr'
+          - '"happy" in curlresponse.stdout'
+
+    - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/404'"
+      register: curlresponse
+    - assert: 
+        that:
+          - curlresponse.rc == 0
+          - '"404" in curlresponse.stderr'
+
+    - command: "curl -v -H 'Host: testsite' 'http://127.0.0.1:81/other'"
+      register: curlresponse
+    - assert: 
+        that:
+          - curlresponse.rc == 0
+          - '"204" in curlresponse.stderr'
