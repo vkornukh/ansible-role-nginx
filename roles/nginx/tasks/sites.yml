@@ -8,7 +8,7 @@
   notify: restart nginx
 
 - name: nginx site 
-  template: src=site.conf.j2  
+  template: src="{{ item.template | default('site.conf.j2') }}  
   args:
     dest: /etc/nginx/sites-available/{{ item.name }}
     mode: 0644 
