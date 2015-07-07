@@ -1,6 +1,8 @@
 ---
 - include: install.yml
-  when: nginx_enabled == true
+  when: install_ppa == False or ansible_pkg_mgr == 'yum'
+- include: install-ppa.yml
+  when: install_ppa == True and ansible_pkg_mgr == 'apt'
 - include: configure.yml
   when: nginx_enabled == true
 - include: sites.yml

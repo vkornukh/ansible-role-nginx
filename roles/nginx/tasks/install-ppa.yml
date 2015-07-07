@@ -1,0 +1,11 @@
+- name: Install nginx PPA
+  apt_repository:
+    repo: ppa:nginx/stable
+    state: present
+
+- name: Install nginx
+  apt:
+    name: "nginx={{ nginx_version | default('1.8.0-1+trusty1') }}"
+    state: present
+    update_cache: yes
+  notify: restart nginx

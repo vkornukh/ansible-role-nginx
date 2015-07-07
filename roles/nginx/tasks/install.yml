@@ -11,20 +11,9 @@
   when: ansible_os_family in nginx_ancillary_packages.keys()
   with_items: nginx_ancillary_packages[ansible_os_family]|default([])
 
-- name: Install Nginx
+- name: Install nginx
   action:
     module: "{{ansible_pkg_mgr}}"
     name: nginx
     state: present
 
-- name: Create Nginx Paths
-  action:
-    module: file
-    path: "{{item}}" 
-    owner: root
-    mode: 0755
-    state: directory
-  with_items: 
-    - "{{ nginx_sites_path }}"
-    - "{{ nginx_sites_available }}"
-    - "{{ nginx_sites_enabled }}"

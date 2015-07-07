@@ -20,6 +20,10 @@ namespace :vagrant do
     # and convert to an ansible inventory file
     sh 'awk -f vagrant-hosts.awk build/ssh-config > inventory/vagrant'
   end
+  task :down => [:destroy]
+  task :destroy do
+    sh 'vagrant destroy -f'
+  end
   task :groupconfig do 
     # gather up the groups from hosts.json and write out a group file
     require 'json'
