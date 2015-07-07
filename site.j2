@@ -1,0 +1,16 @@
+server {
+  listen 81;
+  server_name {{item.name}};
+  access_log /var/log/nginx/81.log;
+  location /404 {
+    return 404;
+  }
+  location ~ ^/up/?$ {
+    root /var/www/{{item.name}};
+    rewrite ^.*$ /up.json break;
+  }
+  location / {
+    return 204;
+  }
+}
+
