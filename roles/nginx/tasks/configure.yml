@@ -2,6 +2,17 @@
   when: ansible_os_family == 'RedHat'
 - set_fact: nginx_user="www-data"
   when: ansible_os_family == 'Debian'
+- name: Create nginx Paths
+  action:
+    module: file
+    path: "{{item}}"
+    owner: root
+    mode: 0755
+    state: directory
+  with_items:
+    - "{{ nginx_sites_path }}"
+    - "{{ nginx_sites_available }}"
+    - "{{ nginx_sites_enabled }}"
 - name: Configure nginx.conf
   template: 
     src: nginx.conf.j2

@@ -1,7 +1,11 @@
 ansible-role-nginx
 ====================
 
-A role to install nginx and configure 0 or more sites' doc roots and nginx config files.
+A role to install nginx and configure 0 or more sites' doc roots and nginx config files. 
+
+For ubuntu systems, it is possible to install the PPA rather than the standard package-managed
+version. This can be done by specifying install_ppa: True in the playbook. To specify a version 
+of nginx to install, use the nginx_version variable. The default is 1.8.0-1+trusty1. 
 
 An example might be:
 
