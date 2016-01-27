@@ -1,9 +1,0 @@
-.idea
-build/*
-!build/.keep
-inventory/vagrant
-inventory/groups
-.vagrant/
-.kitchen/
-VERSION
-roles/nginx/VERSION
