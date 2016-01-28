@@ -1,8 +1,0 @@
----
-- hosts: nginx
-  sudo: true
-  vars:
-    install_ppa: True
-  roles:
-    - nginx
-- include: tests.yml

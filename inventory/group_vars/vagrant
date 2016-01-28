@@ -1,8 +1,0 @@
----
-#:vim: ft=yml
-nginx_sites:
-  - name: testsite
-    template: site.j2
-    files:
-    - name: up.json
-      content: '{ "status": "happy" }'    

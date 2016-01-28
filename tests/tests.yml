@@ -1,0 +1,37 @@
+---
+- hosts: test
+  sudo: true
+  vars:
+    nginx_sites:
+      - name: testsite
+        template: site.j2
+        files:
+        - name: up.json
+          content: '{ "status": "happy" }'
+
+  roles:
+    - ansible-role-nginx
+  post_tasks:
+    - name: Fetch Up Page
+      uri:
+        url: http://{{ ansible_default_ipv4.address }}:81/up
+        status_code: 200
+      register: isup
+      until: isup|success
+      retries: 5
+      delay: 5
+
+    - debug: var=isup
+    - assert: 
+        that:
+          - isup.json.status == "happy"
+ 
+    - name: Fetch 404
+      uri:
+        url: http://{{ ansible_default_ipv4.address }}:81/404
+        status_code: 404
+ 
+    - name: Fetch 204
+      uri:
+        url: http://{{ ansible_default_ipv4.address }}:81/other
+        status_code: 204

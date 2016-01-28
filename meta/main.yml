@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Dan Farrell
+  description: A role to install nginx and configure 0 or more sites doc roots and nginx config files.
+  company: SPS Commerce
+  license: 
+  min_ansible_version: 1.8
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+dependencies: []

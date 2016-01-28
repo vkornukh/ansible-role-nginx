@@ -40,3 +40,8 @@ server {
 
 A docroot '/var/www/testsite' will be created holding `up.json` with the 
 specified content.  The config in `site.j2` will be used for the site.  There is a stub config in `roles/nginx/templates/` that can be used, but it's unliekly to support the exact configuration you need, which is why using an external template is supported.  
+
+Testing
+-------
+
+make test
