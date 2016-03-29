@@ -5,7 +5,7 @@ A role to install nginx and configure 0 or more sites' doc roots and nginx confi
 
 For ubuntu systems, it is possible to install the PPA rather than the standard package-managed
 version. This can be done by specifying install_ppa: True in the playbook. To specify a version 
-of nginx to install, use the nginx_version variable. The default is 1.8.0-1+trusty1. 
+of nginx to install, use the nginx_version variable. The default is 1.8.1-1+trusty0. 
 
 An example might be:
 
