@@ -41,3 +41,45 @@ For Ubuntu systems, it is possible to install the PPA rather than the standard p
 `nginx_ppa_install: true` in the playbook. To specify a version of nginx to install from the PPA, use the `nginx_ppa_version_string` variable.
 However, note that the [PPA](http://www.ubuntuupdates.org/ppa/nginx) doesn't appear to keep historical versions, so pin to a specific version
 at your own risk. If a new package is released, playbooks using a pinned version are likely to start failing.
+
+## Example Invocations
+<pre>
+- role: nginx
+  nginx_sites:
+    - name: "{{ app_name }}.conf"
+      template: templates/nginx.conf.j2
+</pre>
+
+<pre>
+- role: nginx
+  nginx_sites:
+    - name: testsite
+      template: site.j2
+      files:
+        - name: up.json
+          content: '{ "status": "happy" }' 
+</pre>
+
+<pre>
+- role: nginx
+  nginx_sites:
+    - name: "{{ app_name }}.conf"
+      template: templates/nginx.conf.j2
+</pre>
+
+<pre>
+- role: nginx
+  nginx_ppa_install: true
+  nginx_sites:
+    - name: "{{ app_name }}.conf"
+      template: templates/nginx.conf.j2
+</pre>
+
+<pre>
+- role: nginx
+  nginx_ppa_install: true
+  nginx_ppa_version_string: nginx=1.10.0-0+trusty0
+  nginx_sites:
+    - name: "{{ app_name }}.conf"
+      template: templates/nginx.conf.j2
+</pre>
