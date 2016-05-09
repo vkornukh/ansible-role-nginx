@@ -1,24 +1,25 @@
-- name: nginx site root
-  file: >
-    state=directory path={{nginx_sites_path}}/{{item.name}}
-    owner=root
-    mode=0755
-  # note: we should determine nginx group as well
+- name: Create nginx site root
+  file:
+    state: directory
+    path: "{{ nginx_sites_path }}/{{ item.name }}"
+    owner: root
+    mode: 0755
+    # Note: we should determine nginx group as well
   with_items: nginx_sites
   notify: restart nginx
 
-- name: nginx site
-  template: src="{{ item.template | default('site.conf.j2') }}"
-  args:
+- name: Create nginx site from template
+  template:
+    src: "{{ item.template | default('site.conf.j2') }}"
     dest: /etc/nginx/sites-available/{{ item.name }}
     mode: 0644
     owner: root
   with_items: nginx_sites
   notify: restart nginx
 
-- name: nginx site files
-  copy: dest={{ nginx_sites_path}}/{{item.0.name}}/{{item.1.name}}
-  args:
+- name: Create nginx site from files
+  copy:
+    dest: "{{ nginx_sites_path }}/{{ item.0.name }}/{{ item.1.name }}"
     content: "{{ item.1.content }}"
     owner: root
     mode: 0644
@@ -27,8 +28,9 @@
     - 'files'
   notify: restart nginx
 
-- name: nginx enable site
-  file: state=link
-    src=/etc/nginx/sites-available/{{ item.name }}
-    dest=/etc/nginx/sites-enabled/{{ item.name }}
+- name: Enable nginx site
+  file:
+    state: link
+    src: /etc/nginx/sites-available/{{ item.name }}
+    dest: /etc/nginx/sites-enabled/{{ item.name }}
   with_items: nginx_sites

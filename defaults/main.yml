@@ -21,8 +21,8 @@ nginx_access_log_format: combined
 nginx_sites: []
 nginx_sites_path: /var/www
 install_ppa: False
-# Ancillary 
 
+# Ancillary
 nginx_ancillary_packages:
   RedHat:
     - libselinux-python
