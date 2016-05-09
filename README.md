@@ -34,10 +34,10 @@ server {
 }
 </pre>
 
-A docroot '/var/www/testsite' will be created holding `up.json` with the specified content.  The config in `site.j2` will be used for the site.  
+A docroot '/var/www/testsite' will be created holding `up.json` with the specified content.  The config in `site.j2` will be used for the site.
 There is a stub config in `roles/nginx/templates/` that can be used, but it's unlikely to support the exact configuration you need, which is why using an external template is supported.  
 
-For ubuntu systems, it is possible to install the PPA rather than the standard package-managed version. This can be done by specifying 
+For Ubuntu systems, it is possible to install the PPA rather than the standard package-managed version. This can be done by specifying 
 `nginx_ppa_install: true` in the playbook. To specify a version of nginx to install from the PPA, use the `nginx_ppa_version_string` variable.
 However, note that the [PPA](http://www.ubuntuupdates.org/ppa/nginx) doesn't appear to keep historical versions, so pin to a specific version
 at your own risk. If a new package is released, playbooks using a pinned version are likely to start failing.
