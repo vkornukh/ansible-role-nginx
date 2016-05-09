@@ -3,7 +3,6 @@
 nginx_enabled: true
 
 # Nginx Settings
-
 nginx_worker_processes: 1
 nginx_log_dir: /var/log/nginx
 nginx_pid: /var/run/nginx.pid
@@ -20,10 +19,14 @@ nginx_keepalive_timeout: 7
 nginx_access_log_format: combined
 nginx_sites: []
 nginx_sites_path: /var/www
-install_ppa: False
 
 # Ancillary
 nginx_ancillary_packages:
   RedHat:
     - libselinux-python
+
+# Ubuntu PPA
+nginx_ppa_install: false
+nginx_ppa_repository: ppa:nginx/stable
+nginx_ppa_version_string: nginx
 
