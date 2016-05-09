@@ -24,8 +24,8 @@
     owner: root
     mode: 0644
   with_subelements:
-    - nginx_sites
-    - 'files'
+    - "{{ nginx_sites | selectattr('files', 'defined') | list }}"  # http://stackoverflow.com/a/31145937
+    - "files"                                                      # skip_missing flag only seems to exist in Ansible >= 2.0 https://github.com/ansible/ansible/issues/9827#issuecomment-196806299
   notify: restart nginx
 
 - name: Enable nginx site
