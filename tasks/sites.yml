@@ -1,34 +1,36 @@
-- name: nginx site root
-  file: >
-    state=directory path={{nginx_sites_path}}/{{item.name}}
-    owner=root
-    mode=0755
-  # note: we should determine nginx group as well
+- name: Create nginx site root
+  file:
+    state: directory
+    path: "{{ nginx_sites_path }}/{{ item.name }}"
+    owner: root
+    mode: 0755
+    # Note: we should determine nginx group as well
   with_items: nginx_sites
   notify: restart nginx
 
-- name: nginx site
-  template: src="{{ item.template | default('site.conf.j2') }}"
-  args:
-    dest: /etc/nginx/sites-available/{{ item.name }}
+- name: Create nginx site from template
+  template:
+    src: "{{ item.template | default('site.conf.j2') }}"
+    dest: "{{ nginx_sites_available }}/{{ item.name }}"
     mode: 0644
     owner: root
   with_items: nginx_sites
   notify: restart nginx
 
-- name: nginx site files
-  copy: dest={{ nginx_sites_path}}/{{item.0.name}}/{{item.1.name}}
-  args:
+- name: Create nginx site from files
+  copy:
+    dest: "{{ nginx_sites_path }}/{{ item.0.name }}/{{ item.1.name }}"
     content: "{{ item.1.content }}"
     owner: root
     mode: 0644
   with_subelements:
-    - nginx_sites
-    - 'files'
+    - "{{ nginx_sites | selectattr('files', 'defined') | list }}"  # http://stackoverflow.com/a/31145937
+    - "files"                                                      # skip_missing flag only seems to exist in Ansible >= 2.0 https://github.com/ansible/ansible/issues/9827#issuecomment-196806299
   notify: restart nginx
 
-- name: nginx enable site
-  file: state=link
-    src=/etc/nginx/sites-available/{{ item.name }}
-    dest=/etc/nginx/sites-enabled/{{ item.name }}
+- name: Enable nginx site
+  file:
+    state: link
+    src: "{{ nginx_sites_available }}/{{ item.name }}"
+    dest: "{{ nginx_sites_enabled }}/{{ item.name }}"
   with_items: nginx_sites
