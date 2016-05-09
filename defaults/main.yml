@@ -26,7 +26,7 @@ nginx_ancillary_packages:
     - libselinux-python
 
 # Ubuntu PPA
-nginx_ppa_install: false
+nginx_ppa_install: "{{ install_ppa | default(false) }}"  # backwards-compatibility
 nginx_ppa_repository: ppa:nginx/stable
 nginx_ppa_version_string: nginx
 
