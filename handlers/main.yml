@@ -1,5 +1,11 @@
 ---
+#- name: restart nginx
+#  service:
+#    name: nginx
+#    state: restarted
+
+# https://github.com/ansible/ansible/issues/9108
+# https://github.com/SPSCommerce/ansible-role-nginx/issues/1
+
 - name: restart nginx
-  service:
-    name: nginx
-    state: restarted
+  command: service nginx restart
