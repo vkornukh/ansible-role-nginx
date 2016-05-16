@@ -4,6 +4,10 @@
     name: epel-release
     state: present
   when: ansible_pkg_mgr == 'yum'
+  register: installed
+  until: installed|success
+  retries: 5
+  delay: 30
 
 - name: Install Auxilliary Packages
   action:
@@ -11,9 +15,17 @@
     name: "{{ item }}"
   when: ansible_os_family in nginx_ancillary_packages.keys()
   with_items: nginx_ancillary_packages[ansible_os_family]|default([])
+  register: installed
+  until: installed|success
+  retries: 5
+  delay: 30
 
 - name: Install nginx
   action:
     module: "{{ ansible_pkg_mgr }}"
     name: nginx
     state: present
+  register: installed
+  until: installed|success
+  retries: 5
+  delay: 30
