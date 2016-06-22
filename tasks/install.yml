@@ -3,6 +3,7 @@
   yum:
     name: epel-release
     state: present
+    update_cache: true
   when: ansible_pkg_mgr == 'yum'
   register: installed
   until: installed|success
@@ -13,6 +14,7 @@
   action:
     module: "{{ ansible_pkg_mgr }}" 
     name: "{{ item }}"
+    update_cache: true
   when: ansible_os_family in nginx_ancillary_packages.keys()
   with_items: nginx_ancillary_packages[ansible_os_family]|default([])
   register: installed
