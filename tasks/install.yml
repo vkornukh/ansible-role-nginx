@@ -25,6 +25,7 @@
     module: "{{ ansible_pkg_mgr }}"
     name: nginx
     state: present
+    update_cache: true
   register: installed
   until: installed|success
   retries: 5
